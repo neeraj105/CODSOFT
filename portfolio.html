@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhaniyala Neeraj – Online Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #2979ff;
+    --blue-dark: #1a5fd4;
+    --nav-bg: #2c2c2c;
+    --hero-bg: #3d3d3d;
+    --light-bg: #f4f4f4;
+    --white: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-gray: #555;
+    --text-light: #888;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; color: var(--text-dark); overflow-x: hidden; }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--nav-bg);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 66px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .nav-brand h1 {
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 1.25rem; color: #fff; line-height: 1.2;
+  }
+  .nav-brand p { font-size: 0.7rem; color: #999; }
+  .nav-links { display: flex; gap: 26px; list-style: none; }
+  .nav-links a {
+    color: #ccc; text-decoration: none;
+    font-family: 'Montserrat', sans-serif; font-size: 0.75rem;
+    font-weight: 600; letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--blue); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative; overflow: hidden;
+    background: var(--hero-bg);
+    min-height: 500px;
+    display: flex; align-items: center;
+    padding: 70px 80px;
+  }
+  /* dark diagonal overlay */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, rgba(30,30,30,0.92) 52%, rgba(30,30,30,0.35) 100%);
+    z-index: 1;
+  }
+  /* subtle grid texture */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+  }
+  .hero-bg-shape {
+    position: absolute; right: -60px; top: -60px;
+    width: 520px; height: 620px;
+    background: radial-gradient(ellipse at center, #555 0%, #3a3a3a 60%, transparent 100%);
+    border-radius: 50%;
+    opacity: 0.6;
+    z-index: 0;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 580px;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--blue); color: #fff;
+    font-family: 'Montserrat', sans-serif; font-size: 0.7rem;
+    font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 14px; border-radius: 2px; margin-bottom: 20px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .hero-content h2 {
+    font-family: 'Montserrat', sans-serif; font-weight: 900;
+    font-size: 3.2rem; color: #fff; letter-spacing: 0.02em;
+    line-height: 1.05; margin-bottom: 22px;
+    animation: fadeUp 0.65s ease both;
+  }
+  .hero-content p {
+    color: #ccc; font-size: 1rem; line-height: 1.75;
+    margin-bottom: 36px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .btn {
+    display: inline-block; text-decoration: none;
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 0.85rem; letter-spacing: 0.06em;
+    padding: 13px 36px; border-radius: 3px; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-primary {
+    background: var(--blue); color: #fff;
+    box-shadow: 0 4px 16px rgba(41,121,255,0.35);
+    animation: fadeUp 0.95s ease both;
+  }
+  .btn-primary:hover {
+    background: var(--blue-dark); transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(41,121,255,0.45);
+  }
+  .btn-outline {
+    background: transparent; color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+    margin-left: 14px;
+    animation: fadeUp 1.05s ease both;
+  }
+  .btn-outline:hover { border-color: #fff; transform: translateY(-2px); }
+
+  /* floating avatar bubble */
+  .hero-avatar {
+    position: absolute; right: 120px; bottom: 0; z-index: 2;
+    width: 200px; height: 260px;
+    background: linear-gradient(170deg, #666 0%, #3a3a3a 100%);
+    border-radius: 100px 100px 0 0;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
+    animation: riseUp 1s ease both;
+  }
+  .hero-avatar span {
+    color: rgba(255,255,255,0.3); font-size: 0.75rem; text-align: center; padding: 16px;
+  }
+
+  /* ─── ABOUT ─── */
+  .about {
+    display: grid; grid-template-columns: 320px 1fr;
+    gap: 0; background: var(--light-bg); min-height: 420px;
+  }
+  .about-img {
+    background: linear-gradient(170deg, #c0c0c0 0%, #888 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.5); font-size: 0.85rem; text-align: center;
+    padding: 24px; position: relative; overflow: hidden;
+  }
+  .about-img::after {
+    content: ''; position: absolute; bottom: 0; right: 0;
+    width: 60px; height: 60px;
+    background: var(--blue); opacity: 0.6;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+  .about-text {
+    padding: 64px 70px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .about-text h2 {
+    font-family: 'Montserrat', sans-serif; font-weight: 900;
+    font-size: 2rem; letter-spacing: 0.06em; color: var(--text-dark);
+    margin-bottom: 10px;
+  }
+  .rule { width: 42px; height: 3px; background: var(--blue); margin-bottom: 24px; }
+  .about-text .lead {
+    font-size: 1.05rem; font-weight: 600; color: var(--text-dark);
+    line-height: 1.55; margin-bottom: 18px;
+  }
+  .about-text p {
+    color: var(--text-gray); font-size: 0.92rem; line-height: 1.8; margin-bottom: 32px;
+  }
+  .btn-blue {
+    background: var(--blue); color: #fff;
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 0.82rem; letter-spacing: 0.07em;
+    padding: 13px 28px; border: none; border-radius: 3px; cursor: pointer;
+    text-decoration: none; display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-blue:hover { background: var(--blue-dark); transform: translateY(-2px); }
+
+  /* ─── SECTION COMMONS ─── */
+  section.padded { padding: 72px 80px; }
+  .section-header { margin-bottom: 44px; }
+  .section-header h2 {
+    font-family: 'Montserrat', sans-serif; font-weight: 900;
+    font-size: 1.9rem; letter-spacing: 0.06em; color: var(--text-dark);
+    margin-bottom: 10px;
+  }
+  .section-header p { color: var(--text-gray); font-size: 0.95rem; max-width: 560px; }
+
+  /* ─── SKILLS ─── */
+  #skills { background: var(--white); }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;
+  }
+  .skill-card {
+    background: var(--light-bg); border-radius: 6px; padding: 22px 26px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .skill-card h4 {
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 0.88rem; color: var(--text-dark); margin-bottom: 14px;
+  }
+  .bar-bg { background: #ddd; border-radius: 4px; height: 7px; overflow: hidden; }
+  .bar { height: 100%; background: var(--blue); border-radius: 4px;
+         transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+
+  /* ─── PROJECTS ─── */
+  #projects { background: var(--light-bg); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; }
+  .project-card {
+    background: var(--white); border-radius: 8px; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 4px solid var(--blue);
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,0.12); }
+  .project-card-body { padding: 28px; }
+  .project-tag {
+    background: rgba(41,121,255,0.1); color: var(--blue);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 2px;
+    display: inline-block; margin-bottom: 14px;
+  }
+  .project-card h3 {
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 0.98rem; color: var(--text-dark); margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .project-card p { color: var(--text-gray); font-size: 0.88rem; line-height: 1.72; }
+
+  /* ─── EDUCATION ─── */
+  #education { background: var(--white); }
+  .edu-list { display: flex; flex-direction: column; gap: 20px; }
+  .edu-card {
+    display: flex; gap: 24px; align-items: flex-start;
+    background: var(--light-bg); border-radius: 6px; padding: 24px 28px;
+    border-left: 4px solid var(--blue);
+    transition: transform 0.2s;
+  }
+  .edu-card:hover { transform: translateX(4px); }
+  .edu-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--blue); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .edu-info h4 {
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 0.95rem; color: var(--text-dark); margin-bottom: 4px;
+  }
+  .edu-info span { color: var(--blue); font-size: 0.82rem; font-weight: 600; }
+  .edu-info p { color: var(--text-gray); font-size: 0.88rem; margin-top: 4px; }
+
+  /* ─── CERTIFICATIONS ─── */
+  #certifications { background: var(--light-bg); }
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+  .cert-card {
+    background: var(--white); border-radius: 8px; padding: 26px 28px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    display: flex; flex-direction: column; gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cert-card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,0.1); }
+  .cert-card h4 {
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 0.95rem; color: var(--text-dark);
+  }
+  .cert-card .issuer { color: var(--text-gray); font-size: 0.84rem; }
+  .cert-card .date { color: var(--blue); font-size: 0.8rem; font-weight: 600; }
+  .cert-card a {
+    color: var(--blue); font-size: 0.8rem; word-break: break-all;
+    text-decoration: none; border-bottom: 1px dashed var(--blue);
+    padding-bottom: 1px;
+  }
+  .cert-card a:hover { color: var(--blue-dark); }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--nav-bg); padding: 72px 80px; }
+  #contact .section-header h2 { color: #fff; }
+  #contact .section-header p { color: #999; }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; }
+  .contact-item {
+    background: rgba(255,255,255,0.05); border-radius: 8px; padding: 26px 24px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.2s;
+  }
+  .contact-item:hover { background: rgba(41,121,255,0.12); }
+  .contact-item .label {
+    font-family: 'Montserrat', sans-serif; font-size: 0.7rem;
+    font-weight: 700; letter-spacing: 0.12em; color: var(--blue);
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .contact-item .value { color: #ccc; font-size: 0.95rem; word-break: break-all; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #1e1e1e; text-align: center;
+    padding: 20px; color: #666; font-size: 0.78rem;
+  }
+  footer span { color: var(--blue); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes riseUp {
+    from { opacity: 0; transform: translateY(60px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Intersection Observer targets */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 50px 24px; min-height: auto; }
+    .hero-content h2 { font-size: 2rem; }
+    .hero-avatar { display: none; }
+    .about { grid-template-columns: 1fr; }
+    .about-img { height: 220px; }
+    .about-text { padding: 40px 24px; }
+    section.padded { padding: 50px 24px; }
+    #contact { padding: 50px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-brand">
+    <h1>Online Portfolio</h1>
+    <p>Just another My Blog site</p>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">HOME</a></li>
+    <li><a href="#about">ABOUT ME</a></li>
+    <li><a href="#skills">SKILL</a></li>
+    <li><a href="#projects">WORKS</a></li>
+    <li><a href="#education">EXPERIENCE</a></li>
+    <li><a href="#certifications">BLOG</a></li>
+    <li><a href="#contact">CONTACT US</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-shape"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for Hire</div>
+    <h2>DHANIYALA<br>NEERAJ</h2>
+    <p>Hi, I am a skilled developer with expertise in HTML, CSS, JavaScript, Python and Data Analysis. Experienced in building web solutions, interpreting complex datasets, and collaborating across teams to deliver impactful results.</p>
+    <a href="#contact" class="btn btn-primary">Hire Me</a>
+    <a href="#about" class="btn btn-outline">About Me</a>
+  </div>
+  <div class="hero-avatar">
+    <span>Add your<br>photo here</span>
+  </div>
+</section>
+
+<!-- ABOUT ME -->
+<section class="about" id="about">
+  <div class="about-img">
+    📷<br><br>Add your<br>photo here
+  </div>
+  <div class="about-text">
+    <h2>ABOUT ME</h2>
+    <div class="rule"></div>
+    <p class="lead">I am a developer who blends expertise with industry know-how to build impactful digital solutions.</p>
+    <p>Skilled in Java, JavaScript, Python, HTML, and CSS with strong capabilities in data analysis and efficient communication. Experienced in building web solutions, interpreting complex datasets, and collaborating across teams to deliver impactful results. I am passionate about AI/ML technologies and applying them to solve real-world problems.</p>
+    <a href="Neeraj_resume.pdf" class="btn-blue" download>DOWNLOAD RESUME</a>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="padded" id="skills">
+  <div class="section-header reveal">
+    <h2>SKILL</h2>
+    <div class="rule"></div>
+    <p>Technologies and tools I work with.</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <h4>HTML</h4>
+      <div class="bar-bg"><div class="bar" data-width="90" style="width:0%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <h4>CSS</h4>
+      <div class="bar-bg"><div class="bar" data-width="85" style="width:0%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <h4>JavaScript</h4>
+      <div class="bar-bg"><div class="bar" data-width="80" style="width:0%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <h4>Python</h4>
+      <div class="bar-bg"><div class="bar" data-width="88" style="width:0%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <h4>Data Analysis</h4>
+      <div class="bar-bg"><div class="bar" data-width="82" style="width:0%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <h4>Communication</h4>
+      <div class="bar-bg"><div class="bar" data-width="95" style="width:0%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="padded" id="projects">
+  <div class="section-header reveal">
+    <h2>WORKS</h2>
+    <div class="rule"></div>
+    <p>Projects I've built and contributed to.</p>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-card-body">
+        <span class="project-tag">NLP · Cybersecurity</span>
+        <h3>Automated Emerging Cyber Threat Identification and Profiling Based on NLP</h3>
+        <p>Developed an NLP-based cybersecurity system to automatically identify emerging cyber threats from unstructured text sources such as news articles, forums, and threat intelligence reports. Implemented threat classification and profiling techniques to generate real-time security insights and improve proactive threat detection.</p>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-card-body">
+        <span class="project-tag">ML · Sentiment Analysis</span>
+        <h3>Movie Recommendation System Using Sentiment Analysis and Micro Blogging Data</h3>
+        <p>Developed a movie recommendation system using sentiment analysis and microblogging data to analyze user opinions and preferences from social media platforms. Implemented NLP and machine learning techniques to provide personalized and accurate movie recommendations based on real-time user sentiment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="padded" id="education">
+  <div class="section-header reveal">
+    <h2>EXPERIENCE</h2>
+    <div class="rule"></div>
+    <p>My academic background and qualifications.</p>
+  </div>
+  <div class="edu-list">
+    <div class="edu-card reveal">
+      <div class="edu-icon">🎓</div>
+      <div class="edu-info">
+        <h4>Mallareddy Institute of Technology And Science</h4>
+        <span>Mysammaguda, Hyderabad</span>
+        <p>B.Tech – Computer Science and Engineering (AIML) &nbsp;|&nbsp; GPA: 9.00</p>
+      </div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-icon">📚</div>
+      <div class="edu-info">
+        <h4>Kakatiya Junior College</h4>
+        <span>Nizamabad</span>
+        <p>Intermediate &nbsp;|&nbsp; GPA: 8.52</p>
+      </div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-icon">🏫</div>
+      <div class="edu-info">
+        <h4>Zilla Parishad High School</h4>
+        <span>Narayankhed</span>
+        <p>SSC &nbsp;|&nbsp; GPA: 9.5</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="padded" id="certifications">
+  <div class="section-header reveal">
+    <h2>CERTIFICATIONS</h2>
+    <div class="rule"></div>
+    <p>Credentials and courses I've completed.</p>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card reveal">
+      <h4>Python For Beginners</h4>
+      <div class="issuer">Simplilearn | Skillup</div>
+      <div class="date">Aug 2025</div>
+      <a href="https://drive.google.com/file/d/10j7Q85fd7Yzz34ud0u6C_gd0ss796ueb/view?usp=drivesdkn" target="_blank">View Certificate →</a>
+    </div>
+    <div class="cert-card reveal">
+      <h4>Introduction to Generative AI Studio</h4>
+      <div class="issuer">Simplilearn | Skillup</div>
+      <div class="date">Aug 2025</div>
+      <a href="https://drive.google.com/file/d/13206bTTtBqGYvbjoItX_h_-PvsFcQiQy/view?usp=drivesdk" target="_blank">View Certificate →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <h2>CONTACT US</h2>
+    <div class="rule"></div>
+    <p>Feel free to reach out — I'm always open to new opportunities.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-item reveal">
+      <div class="label">Email</div>
+      <div class="value">Nanineeraj02@gmail.com</div>
+    </div>
+    <div class="contact-item reveal">
+      <div class="label">Phone</div>
+      <div class="value">9014357027</div>
+    </div>
+    <div class="contact-item reveal">
+      <div class="label">Location</div>
+      <div class="value">H.no:2-47, Sanjivanraopet,<br>Sangareddy dist, Telangana</div>
+    </div>
+    <div class="contact-item reveal">
+      <div class="label">Languages</div>
+      <div class="value">Hindi &nbsp;·&nbsp; English</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Dhaniyala Neeraj</span>. All Rights Reserved.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Skill bars animate on reveal
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bars = entry.target.querySelectorAll('.bar');
+        bars.forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skills-grid').forEach(el => barObserver.observe(el));
+
+  // Smooth nav active highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? '#2979ff' : '';
+    });
+  });
+</script>
+</body>
+</html>
